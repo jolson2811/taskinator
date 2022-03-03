@@ -64,6 +64,8 @@ var createTaskEl = function (taskDataObj) {
 
   // increase task counter for next unique id
   taskIdCounter++;
+
+  saveTasks();
 };
 
 var createTaskActions = function (taskId) {
@@ -161,6 +163,7 @@ var deleteTask = function (taskId) {
 
   // reassign tasks array to be the same as updatedTaskArr
   tasks = updatedTaskArr;
+  saveTasks();
 };
 
 var completeEditTask = function (taskName, taskType, taskId) {
@@ -183,6 +186,7 @@ var completeEditTask = function (taskName, taskType, taskId) {
 
   formEl.removeAttribute("data-task-id");
   document.querySelector("#save-task").textContent = "Add Task";
+  saveTasks();
 };
 
 var taskStatusChangeHandler = function (event) {
@@ -211,6 +215,12 @@ var taskStatusChangeHandler = function (event) {
       tasks[i].status = statusValue;
     }
   }
+
+  saveTasks();
 };
+var saveTasks = function() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
 
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
